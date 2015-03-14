@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "npm modules for server meterstanden",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "express": "^4.11.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Plus3531/slimmeMeter.git"
+  },
+  "keywords": [
+    "server",
+    "slimmeMeter",
+    "express",
+    "n3lineChart"
+  ],
+  "author": "Paulus Janssen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Plus3531/slimmeMeter/issues"
+  },
+  "homepage": "https://github.com/Plus3531/slimmeMeter"
+}
