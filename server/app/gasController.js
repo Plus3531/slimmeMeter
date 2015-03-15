@@ -22,24 +22,18 @@
 				var maxInterval = Math.max.apply(Math, data.map(function (o) {
 					return o.interval;
 				}));
-				var minM3 = Math.min.apply(Math, data.map(function (o) {
-					return o.m3;
-				}));
-				var maxM3 = Math.max.apply(Math, data.map(function (o) {
-					return o.m3;
-				}));
 				$scope.options = {
 					axes: {
 						x: {
 							key: 'interval',
 							labelFunction: (maxInterval - minInterval) > 86400 ? unixEpochService.formatUnixTimestampDate: unixEpochService.formatUnixTimestamp,
 							type: 'date',
-							min: minInterval,
-							max: maxInterval,
+							//min: minInterval,
+							//max: maxInterval,
 							ticks: 10
 						},
 						y: {
-							type: 'linear', min: minM3, max: maxM3, ticks: 10, labelFunction: function (value) {
+							type: 'linear', ticks: 10, labelFunction: function (value) {
 								return value;
 							}
 						}
@@ -56,8 +50,7 @@
 					tension: 0.7,
 					tooltip: { mode: 'scrubber', formatter: toolTip },
 					drawLegend: true,
-					drawDots: false,
-					columnsHGap: 8
+					drawDots: false
 				}
 			})
 			.error(function (data) {

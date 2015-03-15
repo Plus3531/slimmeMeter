@@ -1,10 +1,10 @@
 ﻿var app = angular.module('kaifa', ['n3-line-chart', 'ngRoute'])
 .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-		$routeProvider.when('/Elektriciteit', {
+		$routeProvider.when('/Elektra', {
 			templateUrl: 'elektriciteit.html',
 			controller: 'ElektriciteitCtrl',
 			controllerAs: 'elektra'
-		}).when('/Gas', {
+		}).when('/Gass', {
 			templateUrl: 'gas.html',
 			controller: 'GasCtrl'
 		});

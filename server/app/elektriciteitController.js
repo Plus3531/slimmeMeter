@@ -1,6 +1,5 @@
 ﻿angular.module('kaifa').controller('ElektriciteitCtrl', ['unixEpochService', 'state', '$http', '$scope', '$routeParams',
 	function (unixEpochService, state, $http, $scope, $routeParams) {
-		this.name = state.elektriciteit.periode;
 		$scope.elektriciteit = state.elektriciteit;
 		$scope.datetimeChange = function () {
 			state.elektriciteit.tot = $scope.elektriciteit.tot;
@@ -25,24 +24,18 @@
 				var maxInterval = Math.max.apply(Math, data.map(function (o) {
 					return o.interval;
 				}));
-				var minWatt = Math.min.apply(Math, data.map(function (o) {
-					return o.watt;
-				}));
-				var maxWatt = Math.max.apply(Math, data.map(function (o) {
-					return o.watt;
-				}));
 				$scope.options = {
 					axes: {
 						x: {
 							key: 'interval',
 							labelFunction: (maxInterval - minInterval) > 86400 ? unixEpochService.formatUnixTimestampDate: unixEpochService.formatUnixTimestamp,
 							type: 'date',
-							min: minInterval,
-							max: maxInterval,
+							//min: minInterval,
+							//max: maxInterval,
 							ticks: 10
 						},
 						y: {
-							type: 'linear', min: minWatt, max: maxWatt, ticks: 6, labelFunction: function (value) {
+							type: 'linear', ticks: 6, labelFunction: function (value) {
 								return value;
 							}
 						}

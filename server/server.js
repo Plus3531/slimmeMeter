@@ -5,8 +5,8 @@ var port = process.env.port || 3001;
 var app = express();
 
 var fs = require("fs");
-//var file = "../data/kaifa.db";
-var file = "c:/Users/paulusj/Documents/kaifa/data/Kaifa.db";
+var file = "../data/Kaifa.db";
+//var file = "c:/Users/paulusj/Documents/kaifa/data/Kaifa.db";
 var sqlite3 = require("sqlite3");
 var db = new sqlite3.Database(file);
 app.use(bodyParser.urlencoded({ 'extended': 'true' }));            // parse application/x-www-form-urlencoded
