@@ -26,7 +26,7 @@ app.use(express.static('.'));
 //	});
 //});
 
-app.get('/grafiek', function (req, res) {
+app.get('/elektriciteit', function (req, res) {
 	if (!req.query.periode || req.query.periode === 0) {
 		res.status(404).send('Not found');
 		return;
@@ -109,6 +109,85 @@ app.get('/grafiek', function (req, res) {
 
 	//res.send(req.query.periode+' -- '+req.query.tot);
 });
+
+app.get('/gas', function (req, res) {
+	if (!req.query.periode || req.query.periode === 0) {
+		res.status(404).send('Not found');
+		return;
+	}
+	if (!req.query.tot || req.query.tot === 0) {
+		res.status(404).send('Not found');
+		return;
+	}
+	var result = [];
+	var sql;
+	switch (req.query.periode) {
+		case 'uur'://stappen van 3 min
+			sql = getGasVerbruik(180, req.query.tot - 3600, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			});
+			break;
+
+		case '3uur'://stappen van 5 min
+			sql = getGasVerbruik(300, req.query.tot - 10800, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			});
+			break;
+		case '6uur'://stappen van 10 min
+			sql = getGasVerbruik(600, req.query.tot - 21600, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			});
+			break;
+		case '12uur':
+			//stappen van kwartier
+			sql = getGasVerbruik(900, req.query.tot - 43200, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			});
+			break;
+		case 'dag':
+			//stappen van half uur
+			sql = getGasVerbruik(1800, req.query.tot - 86400, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			});
+			break;
+		case 'week':
+			//stappen van 4 uur
+			sql = getGasVerbruik(14400, req.query.tot - 604800, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			}); break;
+		case 'maand': break;
+		case '6maand': break;
+		case 'jaar': break;
+		default: break;
+	}
+
+	//res.send(req.query.periode+' -- '+req.query.tot);
+});
+
 app.get('*', function (req, res) {
 	res.sendFile('index.html', { root: __dirname }); // load the single view file (angular will handle the page changes on the front-end)
 });
@@ -123,4 +202,9 @@ function getVerbruik(interval, van, tot) {
 	return "select ((verbruik.datetime / " + interval + ") * " + interval + ")  interval, avg(watt) watt " +
 		"from verbruik " +
 		"where verbruik.datetime <= " + tot + " and verbruik.datetime >= " + van + " group by interval";
+}
+function getGasVerbruik(interval, van, tot) {
+	return "select ((tijdstip / " + interval + ") *  " + interval + ") interval, avg(verbruik) m3 " +
+	"from vwgasverbruik " +
+	"where tijdstip <= " + tot + " and tijdstip >= " + van + " group by interval";
 }

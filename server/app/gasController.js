@@ -11,7 +11,7 @@
 			getGrafiek(newValue, Math.round(state.gas.tot.getTime() / 1000));
 		});
 		function getGrafiek(periode, tot) {
-			$http.get('/grafiek?periode=' + periode + '&tot=' + tot)
+			$http.get('/gas?periode=' + periode + '&tot=' + tot)
 			.success(function (data) {
 				if (!data || data.length === 0) return;
 				$scope.data = data;
@@ -22,11 +22,11 @@
 				var maxInterval = Math.max.apply(Math, data.map(function (o) {
 					return o.interval;
 				}));
-				var minWatt = Math.min.apply(Math, data.map(function (o) {
-					return o.watt;
+				var minM3 = Math.min.apply(Math, data.map(function (o) {
+					return o.m3;
 				}));
-				var maxWatt = Math.max.apply(Math, data.map(function (o) {
-					return o.watt;
+				var maxM3 = Math.max.apply(Math, data.map(function (o) {
+					return o.m3;
 				}));
 				$scope.options = {
 					axes: {
@@ -39,13 +39,13 @@
 							ticks: 10
 						},
 						y: {
-							type: 'linear', min: minWatt, max: maxWatt, ticks: 6, labelFunction: function (value) {
+							type: 'linear', min: minM3, max: maxM3, ticks: 10, labelFunction: function (value) {
 								return value;
 							}
 						}
 					},
 					series: [{
-							y: 'watt',
+							y: 'm3',
 							color: 'red',
 							thickness: '1px',
 							label: theLabel,
@@ -56,8 +56,8 @@
 					tension: 0.7,
 					tooltip: { mode: 'scrubber', formatter: toolTip },
 					drawLegend: true,
-					drawDots: false
-					//columnsHGap: 5
+					drawDots: false,
+					columnsHGap: 8
 				}
 			})
 			.error(function (data) {

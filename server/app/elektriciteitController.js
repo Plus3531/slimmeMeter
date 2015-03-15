@@ -14,7 +14,7 @@
 		});
 		//getGrafiek('dag', 1425773728);
 		function getGrafiek(periode, tot) {
-			$http.get('/grafiek?periode=' + periode + '&tot=' + tot)//http://localhost:3001/grafiek?periode=dag&tot=1425773728
+			$http.get('/elektriciteit?periode=' + periode + '&tot=' + tot)//http://localhost:3001/grafiek?periode=dag&tot=1425773728
 			.success(function (data) {
 				if (!data || data.length === 0) return;
 				$scope.data = data;
