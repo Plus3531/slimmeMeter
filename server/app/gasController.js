@@ -33,7 +33,7 @@
 							ticks: 10
 						},
 						y: {
-							type: 'linear', ticks: 10, labelFunction: function (value) {
+							type: 'linear', labelFunction: function (value) {
 								return value;
 							}
 						}
@@ -44,13 +44,14 @@
 							thickness: '1px',
 							label: theLabel,
 							type: 'column',
-							striped: true
+							striped: false
 						}],
 					lineMode: 'linear',
 					tension: 0.7,
 					tooltip: { mode: 'scrubber', formatter: toolTip },
 					drawLegend: true,
-					drawDots: false
+					drawDots: false,
+					columnsHGap: 50
 				}
 			})
 			.error(function (data) {
