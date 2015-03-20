@@ -54,7 +54,7 @@
 					drawLegend: true,
 					drawDots: false
 					//columnsHGap: 5
-				}
+				};
 			})
 			.error(function (data) {
 				$scope.hello = data;

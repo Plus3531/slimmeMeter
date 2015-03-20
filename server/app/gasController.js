@@ -52,7 +52,7 @@
 					drawLegend: true,
 					drawDots: false,
 					columnsHGap: 50
-				}
+				};
 			})
 			.error(function (data) {
 				$scope.hello = data;
