@@ -179,7 +179,14 @@ app.get('/gas', function (req, res) {
 			}, function () {
 				res.send(result);
 			}); break;
-		case 'maand': break;
+		case 'maand'://stappen van 24 uur
+			sql = getGasVerbruik(86400, req.query.tot - 2592000, req.query.tot);
+			//var sql = getVerbruik(3600, 1425735891,1425773728);
+			db.each(sql, function (err, row) {
+				result.push({ "interval": row.interval, "m3": row.m3 });
+			}, function () {
+				res.send(result);
+			}); break;
 		case '6maand': break;
 		case 'jaar': break;
 		default: break;

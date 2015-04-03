@@ -1,4 +1,4 @@
-﻿var app = angular.module('kaifa', ['n3-line-chart', 'ngRoute'])
+﻿var app = angular.module('kaifa', ['n3-line-chart', 'ngRoute', 'ui.bootstrap'])
 .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 		$routeProvider.when('/Elektra', {
 			templateUrl: 'elektriciteit.html',
@@ -8,7 +8,6 @@
 			templateUrl: 'gas.html',
 			controller: 'GasCtrl'
 		});
-		
 		$locationProvider.html5Mode(true);
 	}])
 .controller('MainCtrl', ['$scope','$route', '$routeParams', '$location',
