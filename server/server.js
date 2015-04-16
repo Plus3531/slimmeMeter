@@ -106,10 +106,24 @@ app.get('/elektriciteit', function (req, res) {
 		case 'jaar': break;
 		default: break;
 	}
-
-	//res.send(req.query.periode+' -- '+req.query.tot);
 });
-
+app.get('/gasperdag', function(req, res) {
+	if (!req.query.tot || req.query.tot === 0) {
+		res.status(404).send('Not found');
+		return;
+	}
+	if (!req.query.van || req.query.van === 0) {
+		res.status(404).send('Not found');
+		return;
+	}
+	var result = [];
+	var sql = getGasPerDag(req.query.van, req.query.tot);
+	db.each(sql, function (err, row) {
+		result.push({ "dag": row.dag, "meterstand": row.meterstand, "verbruik": row.verbruik });
+	}, function () {
+		res.send(result);
+	});
+});
 app.get('/gas', function (req, res) {
 	if (!req.query.periode || req.query.periode === 0) {
 		res.status(404).send('Not found');
@@ -214,4 +228,8 @@ function getGasVerbruik(interval, van, tot) {
 	return "select ((tijdstip / " + interval + ") *  " + interval + ") interval, avg(verbruik) m3 " +
 	"from vwgasverbruik " +
 	"where tijdstip <= " + tot + " and tijdstip >= " + van + " group by interval";
+}
+function getGasPerDag(van, tot) {
+	//var s = "SELECT dag, meterstand, verbruik FROM gasPerDag where dag <= '2015-03-23' and dag >= '2015-03-10'"
+	return "SELECT dag, meterstand, verbruik FROM gasPerDag where dag <= '" + tot + "' and dag >= '" + van + "'";
 }

@@ -21,26 +21,55 @@
 			state.gas.periode = newValue;
 			getGrafiek(newValue, Math.round(state.gas.tot.getTime() / 1000));
 		});
+		function getDagGrafiekDate(datum) {
+			return  datum.getFullYear() + '-'
+			+ ('0' + (datum.getMonth()+1)).slice(-2) + '-'
+			+ ('0' + datum.getDate()).slice(-2);
+			//var day = datum.getDate();
+			//var year = datum.getFullYear();
+			//var month = datum.getMonth() + 1;
+			//return year.toString()+'-'+month.toString()+'-'+day.toString();
+		};
+		function getDagGrafiekDateInv(datumString) {
+			//assume format yyyy-MM-dd
+			var ymd = datumString.split('-');
+			return new Date(ymd[0], ymd[1].replace(/\b0+/g, ''), ymd[2].replace(/\b0+/g, ''));
+		};
 		$scope.getDagGrafiek = function(van, tot) {
+
+			$http.get('/gasperdag?van=' + getDagGrafiekDate($scope.gas.standVan) + '&tot=' + getDagGrafiekDate($scope.gas.standTot))
+				.success(function (data) {
+					var result = [];
+					var dpd;
+					//create a date of return string
+					for (var i= 0; i < data.length; i++) {
+						//dpd = data[i].dag
+						result.push({'dag': getDagGrafiekDateInv(data[i].dag), 'verbruik':data[i].verbruik, 'stand': data[i].meterstand});
+					}
+					$scope.dataDag = result;
+				})
+				.error(function (data) {
+					$scope.hello = data;
+				});
+
 			$scope.optionsDag = {
 				axes: {
-					x: {
-						key: 'dag',
-						type: 'date',
-						ticks: 10
+					x: {key: 'dag',labelFunction: getDagGrafiekDate,
+						type: 'date'
 					},
 					y: {
-						type: 'linear', labelFunction: function (value) {
+						type: 'linear',
+						labelFunction: function (value) {
 							return value;
 						}
 					}
 				},
 				series: [{
-					y: 'm3',
+					y: 'stand',
 					color: 'red',
 					thickness: '1px',
 					label: 'testLabel',
-					type: 'linear',
+					type: 'line',
 					striped: false
 				}],
 				lineMode: 'linear',
@@ -50,7 +79,8 @@
 				drawDots: false,
 				columnsHGap: 50
 			};
-			$scope.dataDag = [{ "dag": '2015/03/22', "m3": 5432 },{ "dag": '2015/03/23', "m3": 5932 },{ "dag": '2015/03/24', "m3": 5032 }];
+			//$scope.dataDag = [{ "dag": new Date(1428090892), "verbruik": 5432 },{ "dag": new Date(1428091892), "verbruik": 5932 },{ "dag": new Date(1428092892), "verbruik": 5032 }];
+			//$scope.dataDag = [{ "dag": new Date(1428090892 * 1000), "m3": 5432 },{ "dag": new Date(1428091892 * 1000), "m3": 5932 },{ "dag": new Date(1428092892 * 1000), "m3": 5032 }];
 		}
 
 		function getGrafiek(periode, tot) {
@@ -76,7 +106,8 @@
 							ticks: 10
 						},
 						y: {
-							type: 'linear', labelFunction: function (value) {
+							type: 'linear',
+							labelFunction: function (value) {
 								return value;
 							}
 						}
