@@ -124,6 +124,23 @@ app.get('/gasperdag', function(req, res) {
 		res.send(result);
 	});
 });
+app.get('/gasmeterstand', function(req, res) {
+	if (!req.query.tot || req.query.tot === 0) {
+		res.status(404).send('Not found');
+		return;
+	}
+	if (!req.query.van || req.query.van === 0) {
+		res.status(404).send('Not found');
+		return;
+	}
+	var result = [];
+	var sql = getGasMeterstand(req.query.van, req.query.tot);
+	db.each(sql, function (err, row) {
+		result.push({ "tijdstip": row.tijdstip, "meterstand": row.meterstand, "verbruik": row.verbruik });
+	}, function () {
+		res.send(result);
+	});
+});
 app.get('/gas', function (req, res) {
 	if (!req.query.periode || req.query.periode === 0) {
 		res.status(404).send('Not found');
@@ -232,4 +249,7 @@ function getGasVerbruik(interval, van, tot) {
 function getGasPerDag(van, tot) {
 	//var s = "SELECT dag, meterstand, verbruik FROM gasPerDag where dag <= '2015-03-23' and dag >= '2015-03-10'"
 	return "SELECT dag, meterstand, verbruik FROM gasPerDag where dag <= '" + tot + "' and dag >= '" + van + "'";
+}
+function getGasMeterstand(van, tot) {
+	return "SELECT tijdstip, meterstand, verbruik FROM vwgasverbruik where tijdstip <= " + tot + " and tijdstip >= " + van;
 }

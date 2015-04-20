@@ -2,24 +2,34 @@
 <html>
 
 <head>
+	<script src="bower_components/d3/d3.min.js"></script>
 	<!-- build:js dist/angular.min.js -->
 	<script src="bower_components/angular/angular.js"></script>
 	<!-- endbuild -->
 	<script src="bower_components/angular-route/angular-route.js"></script>
-	<script src="bower_components/d3/d3.min.js"></script>
-	<script src="bower_components/n3-line-chart/build/line-chart.min.js"></script>
-	<script src="bower_components/bootstrap-bower/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
-	<!--<link href="bower_components/bootstrap-bower/css/bootstrap.min.css" />-->
+	<script src="bower_components/bootstrap-bower/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+	<link href="bower_components/bootstrap-bower/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/chart.css" />
 	<!-- build:js dist/optimized.js -->
 	<script src="app/app.js"></script>
+	<script src="app/directives/gasBarchart.js"></script>
+	<script src="app/directives/electriciteitChart.js"></script>
+	<script src="app/directives/gasMeterstand.js"></script>
 	<script src="app/services.js"></script>
 	<script src="app/elektriciteitController.js"></script>
 	<script src="app/gasController.js"></script>
+
 	<!-- endbuild -->
 	<title>Slimme Meter</title>
 	<style>
+		.SelectedEnergy {
+			margin-left: 5em;
+			font-weight: bold;
+			font-size: larger;
+			color: green;
+		}
+
 		#period {
 			display: inline-block;
 			/*float: right;
@@ -41,9 +51,10 @@
 </head>
 
 <body ng-app="kaifa">
-	<div ng-controller="MainCtrl">
+	<div ng-controller="MainCtrl as main">
 		<a href="Elektra">Elektriciteit</a> |
 		<a href="Gass">Gas</a>
+		<span class="SelectedEnergy">{{main.$location.path()}}</span>
 		<div ng-view></div>
 	</div>
 </body>

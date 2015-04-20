@@ -1,5 +1,8 @@
-﻿angular.module('kaifa').controller('GasCtrl', ['unixEpochService', 'state', '$http', '$scope',
-	function (unixEpochService, state, $http, $scope) {
+﻿angular.module('kaifa').controller('GasCtrl', ['state', '$http', '$scope',
+	function (state, $http, $scope) {
+		$scope.meterstanden = [];
+		//$scope.gasStanden = [{"interval": 1429260333, "m3":900}, {"interval": 1429261333, "m3":400}
+		//	, {"interval": 1429262333, "m3":500}, {"interval": 1429264333, "m3":800}];
 		$scope.gas = state.gas;
 		var cd = new Date();
 		//go 30 days back in time
@@ -21,119 +24,30 @@
 			state.gas.periode = newValue;
 			getGrafiek(newValue, Math.round(state.gas.tot.getTime() / 1000));
 		});
-		function getDagGrafiekDate(datum) {
-			return  datum.getFullYear() + '-'
-			+ ('0' + (datum.getMonth()+1)).slice(-2) + '-'
-			+ ('0' + datum.getDate()).slice(-2);
-			//var day = datum.getDate();
-			//var year = datum.getFullYear();
-			//var month = datum.getMonth() + 1;
-			//return year.toString()+'-'+month.toString()+'-'+day.toString();
-		};
-		function getDagGrafiekDateInv(datumString) {
-			//assume format yyyy-MM-dd
-			var ymd = datumString.split('-');
-			return new Date(ymd[0], ymd[1].replace(/\b0+/g, ''), ymd[2].replace(/\b0+/g, ''));
-		};
-		$scope.getDagGrafiek = function(van, tot) {
-
-			$http.get('/gasperdag?van=' + getDagGrafiekDate($scope.gas.standVan) + '&tot=' + getDagGrafiekDate($scope.gas.standTot))
-				.success(function (data) {
-					var result = [];
-					var dpd;
-					//create a date of return string
-					for (var i= 0; i < data.length; i++) {
-						//dpd = data[i].dag
-						result.push({'dag': getDagGrafiekDateInv(data[i].dag), 'verbruik':data[i].verbruik, 'stand': data[i].meterstand});
-					}
-					$scope.dataDag = result;
-				})
-				.error(function (data) {
-					$scope.hello = data;
-				});
-
-			$scope.optionsDag = {
-				axes: {
-					x: {key: 'dag',labelFunction: getDagGrafiekDate,
-						type: 'date'
-					},
-					y: {
-						type: 'linear',
-						labelFunction: function (value) {
-							return value;
-						}
-					}
-				},
-				series: [{
-					y: 'stand',
-					color: 'red',
-					thickness: '1px',
-					label: 'testLabel',
-					type: 'line',
-					striped: false
-				}],
-				lineMode: 'linear',
-				tension: 0.7,
-				//tooltip: { mode: 'scrubber', formatter: toolTip },
-				drawLegend: true,
-				drawDots: false,
-				columnsHGap: 50
-			};
-			//$scope.dataDag = [{ "dag": new Date(1428090892), "verbruik": 5432 },{ "dag": new Date(1428091892), "verbruik": 5932 },{ "dag": new Date(1428092892), "verbruik": 5032 }];
-			//$scope.dataDag = [{ "dag": new Date(1428090892 * 1000), "m3": 5432 },{ "dag": new Date(1428091892 * 1000), "m3": 5932 },{ "dag": new Date(1428092892 * 1000), "m3": 5032 }];
-		}
 
 		function getGrafiek(periode, tot) {
+			var van = tot - (60 * 60 * 24 * 30);
+			getMeterstanden(van, tot);
+			function getMeterstanden(van, tot)
+			{
+				$http.get('/gasmeterstand?van=' + van + '&tot=' + tot)
+				.success(function (data) {
+					$scope.meterstanden = data;
+					})
+				.error(function (data) {
+					console.log(data);
+				})
+			}
+
 			$http.get('/gas?periode=' + periode + '&tot=' + tot)
 			.success(function (data) {
 				if (!data || data.length === 0) return;
 				$scope.data = data;
-				var minInterval = Math.min.apply(Math, data.map(function (o) {
-					return o.interval;
-				}));
-				var theLabel = unixEpochService.formatUnixTimestampDate(minInterval);
-				var maxInterval = Math.max.apply(Math, data.map(function (o) {
-					return o.interval;
-				}));
-				$scope.options = {
-					axes: {
-						x: {
-							key: 'interval',
-							labelFunction: (maxInterval - minInterval) > 86400 ? unixEpochService.formatUnixTimestampDate: unixEpochService.formatUnixTimestamp,
-							type: 'date',
-							//min: minInterval,
-							//max: maxInterval,
-							ticks: 10
-						},
-						y: {
-							type: 'linear',
-							labelFunction: function (value) {
-								return value;
-							}
-						}
-					},
-					series: [{
-							y: 'm3',
-							color: 'red',
-							thickness: '1px',
-							label: theLabel,
-							type: 'column',
-							striped: false
-						}],
-					lineMode: 'linear',
-					tension: 0.7,
-					tooltip: { mode: 'scrubber', formatter: toolTip },
-					drawLegend: true,
-					drawDots: false,
-					columnsHGap: 50
-				};
+				$scope.gasStanden = data;
+
 			})
 			.error(function (data) {
 				$scope.hello = data;
 			});
-		}
-		function toolTip(x, y, series) {
-			var dt = unixEpochService.formatUnixTimestamp(x);
-			return y + ' ' + dt;
 		}
 	}]);

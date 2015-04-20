@@ -17,6 +17,8 @@
 			.success(function (data) {
 				if (!data || data.length === 0) return;
 				$scope.data = data;
+					$scope.data2 = data;
+					return;
 				var minInterval = Math.min.apply(Math, data.map(function (o) {
 					return o.interval;
 				}));

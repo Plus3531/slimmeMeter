@@ -1,10 +1,8 @@
 ﻿<div>
-	<linechart data="data" options="options" mode="" width="1200" height="500"></linechart>
 	<form name="myForm2">
 		<input type="datetime-local" id="gasInput" name="inputGas" ng-model="gas.tot"
 			   ng-change="datetimeChange()"
 			   placeholder="yyyy-MM-ddTHH:mm" min="2015-01-01T00:00" max="2020-12-31T00:00" required/>
-
 		<div id="period">
 			<label for="r1"><input id="r1" class="pr" type="radio" ng-model="gas.periode" value="uur"/> Uur </label>
 			<label for="r2"><input id="r2" class="pr" type="radio" ng-model="gas.periode" value="3uur"/> 3 Uur </label>
@@ -19,47 +17,8 @@
 			<label for="r9"><input id="r9" class="pr" type="radio" ng-model="gas.periode" value="jaar"/> Jaar </label>
 		</div>
 	</form>
-	<hr/>
-	<form name="myForm3">
-		<div class="row">
-			<div class="col-md-2">
-				<span>Start date</span>
-			</div>
-			<div class="col-md-2">
-				<span>End date</span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-2">
-				<p class="input-group">
-					<input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="gas.standVan"
-						   is-open="opened1"
-						   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-						   close-text="Close"/>
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i
-								class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
-			</div>
-			<div class="col-md-2">
-				<p class="input-group">
-					<input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="gas.standTot"
-						   is-open="opened2"
-						   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-						   close-text="Close"/>
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open($event,'opened2')"><i
-								class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
-			</div>
-			<div class="col-md-2">
-				<button ng-click="getDagGrafiek('van', 'tot')">gasmeter standen</button>
-			</div>
-		</div>
-
-
-		<linechart id="dagGrafiek" data="dataDag" options="optionsDag" mode="" width="1200" height="500"></linechart>
-	</form>
+	<gas-barchart chart-data="gasStanden"></gas-barchart>
+	<div id="gasChart"></div>
+	<gas-meterstand chart-data="meterstanden"></gas-meterstand>
+	<div id="gasMeterstand"></div>
 </div>
