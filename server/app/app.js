@@ -1,4 +1,4 @@
-﻿var app = angular.module('kaifa', ['ngRoute', 'ui.bootstrap'])
+﻿var app = angular.module('kaifa', ['ngRoute', 'mgcrea.ngStrap'])
 .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 		$routeProvider.when('/Elektra', {
 			templateUrl: 'elektriciteit.html',

@@ -1,19 +1,32 @@
 ﻿<div>
-	<input type="datetime-local" id="exampleInput" name="input" ng-model="elektriciteit.tot"
-		ng-change="datetimeChange()"
-		placeholder="yyyy-MM-ddTHH:mm:ss" min="2015-01-01T00:00:00" max="2020-12-31T00:00:00" required />
-
-	<div id="period">
-		<label for="r1"><input id="r1" class="pr" type="radio" ng-model="elektriciteit.periode" value="uur" /> Uur </label>
-		<label for="r2"><input id="r2" class="pr" type="radio" ng-model="elektriciteit.periode" value="3uur" /> 3 Uur </label>
-		<label for="r3"><input id="r3" class="pr" type="radio" ng-model="elektriciteit.periode" value="6uur" /> 6 Uur </label>
-		<label for="r4"><input id="r4" class="pr" type="radio" ng-model="elektriciteit.periode" value="12uur" /> 12 Uur </label>
-		<label for="r5"><input id="r5" class="pr" type="radio" ng-model="elektriciteit.periode" value="dag" /> Dag </label>
-		<label for="r6"><input id="r6" class="pr" type="radio" ng-model="elektriciteit.periode" value="week" /> Week </label>
-		<label for="r7"><input id="r7" class="pr" type="radio" ng-model="elektriciteit.periode" value="maand" /> Maand </label>
-		<label for="r8"><input id="r8" class="pr" type="radio" ng-model="elektriciteit.periode" value="6maand" /> 6 Maanden </label>
-		<label for="r9"><input id="r9" class="pr" type="radio" ng-model="elektriciteit.periode" value="jaar" /> Jaar </label>
-	</div>
+	<span>jaar</span> <select ng-model="jaar" ng-change="updateDate()" ng-options="jaar as jaar for jaar in jaren"><option>--</option></select>
+	<span>maand</span><select ng-model="maand" ng-change="updateDate()" ng-options="maand as maand.name for maand in maanden"><option>--</option></select>
+	<span>dag</span><select ng-model="dag" ng-change="updateDate()" ng-options="dag as dag for dag in dagen"><option>--</option></select>
+	<span>uur</span><select ng-model="uur" ng-change="updateDate()" ng-options="uur as uur for uur in uren"><option>--</option></select>{{maand}}{{dag}}{{uur}}
+	<form name="timepickerForm" class="form-inline" role="form">
+		<div class="form-group" id="period">
+			<label for="r1"><input id="r1" class="pr" type="radio" ng-model="elektriciteit.periode" value="uur"/> Uur
+			</label>
+			<label for="r2"><input id="r2" class="pr" type="radio" ng-model="elektriciteit.periode" value="3uur"/> 3 Uur
+			</label>
+			<label for="r3"><input id="r3" class="pr" type="radio" ng-model="elektriciteit.periode" value="6uur"/> 6 Uur
+			</label>
+			<label for="r4"><input id="r4" class="pr" type="radio" ng-model="elektriciteit.periode" value="12uur"/> 12
+				Uur
+			</label>
+			<label for="r5"><input id="r5" class="pr" type="radio" ng-model="elektriciteit.periode" value="dag"/> Dag
+			</label>
+			<label for="r6"><input id="r6" class="pr" type="radio" ng-model="elektriciteit.periode" value="week"/> Week
+			</label>
+			<label for="r7"><input id="r7" class="pr" type="radio" ng-model="elektriciteit.periode" value="maand"/>
+				Maand
+			</label>
+			<label for="r8"><input id="r8" class="pr" type="radio" ng-model="elektriciteit.periode" value="6maand"/> 6
+				Maanden </label>
+			<label for="r9"><input id="r9" class="pr" type="radio" ng-model="elektriciteit.periode" value="jaar"/> Jaar
+			</label>
+		</div>
+	</form>
 	<electriciteit-chart chart-data="data2"></electriciteit-chart>
 	<div id="electriciteitChart"></div>
 </div>
