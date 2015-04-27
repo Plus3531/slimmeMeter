@@ -6,10 +6,11 @@
 			state.gas.tot = theDate;
 			getGrafiek(state.gas.periode, Math.round(state.gas.tot.getTime() / 1000));
 		};
-		$scope.periodChanged = function() {
-			state.gas.periode = $scope.gas.periode;
+		$scope.thePeriodChanged = function(periode) {
+			state.gas.periode = periode;
 			getGrafiek(state.gas.periode, Math.round(state.gas.tot.getTime() / 1000));
 		};
+
 		function getGrafiek(periode, tot) {
 			var van = tot - (60 * 60 * 24 * 30);
 			getMeterstanden(van, tot);

@@ -1,10 +1,6 @@
 ﻿<div>
-	<tot-period date-changed="theDateChanged(theDate)" datum="gas.tot"></tot-period>
-	<span ng-repeat="n in [{name:'Uur', v:'uur'},{name:'3 Uur', v:'3uur'},{name:'6 Uur', v:'6uur'}
-	,{name:'12 Uur', v:'12uur'},{name:'Dag', v:'dag'},{name:'Week', v:'week'},{name:'Maand', v:'maand'}
-	,{name:'6 Maanden', v:'6maand'},{name:'Jaar', v:'jaar'}] track by $index">
-		<label for="r_{{$index}}"><input id="r_{{$index}}" class="pr" type="radio" ng-change="periodChanged()" ng-model="gas.periode" value="{{n.v}}"/> {{n.name}} </label>
-	</span>
+	<pj-date-picker date-changed="theDateChanged(theDate)" datum="gas.tot"></pj-date-picker>
+	<pj-period-picker period-changed="thePeriodChanged(periode)" periode="gas.periode"></pj-period-picker>
 	<gas-barchart chart-data="gasStanden"></gas-barchart>
 	<div id="gasChart"></div>
 	<gas-meterstand chart-data="meterstanden"></gas-meterstand>
