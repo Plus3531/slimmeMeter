@@ -3,28 +3,8 @@
 	<span ng-repeat="n in [{name:'Uur', v:'uur'},{name:'3 Uur', v:'3uur'},{name:'6 Uur', v:'6uur'}
 	,{name:'12 Uur', v:'12uur'},{name:'Dag', v:'dag'},{name:'Week', v:'week'},{name:'Maand', v:'maand'}
 	,{name:'6 Maanden', v:'6maand'},{name:'Jaar', v:'jaar'}] track by $index">
-		<!--{{n.name}}{{$index}}-->
-		<label for="r_{{$index}}"><input id="r_{{$index}}" class="pr" type="radio" ng-model="gas.periode" value="{{n.v}}"/> {{n.name}} </label>
+		<label for="r_{{$index}}"><input id="r_{{$index}}" class="pr" type="radio" ng-change="periodChanged()" ng-model="gas.periode" value="{{n.v}}"/> {{n.name}} </label>
 	</span>
-	<!--<span ng-repeat="n in [42, 42, 43, 43] track by $index">-->
-		<!--{{n}}{{$index}}-->
-		<!--<label for="r_{{$index}}"><input id="r_{{$index}}" class="pr" type="radio" ng-model="gas.periode" value="uur_{{$index}}"/> {{n}}_bla </label>-->
-	<!--</span>-->
-	<form name="myForm2">
-		<div id="period">
-			<label for="r1"><input id="r1" class="pr" type="radio" ng-model="gas.periode" value="uur"/> Uur </label>
-			<label for="r2"><input id="r2" class="pr" type="radio" ng-model="gas.periode" value="3uur"/> 3 Uur </label>
-			<label for="r3"><input id="r3" class="pr" type="radio" ng-model="gas.periode" value="6uur"/> 6 Uur </label>
-			<label for="r4"><input id="r4" class="pr" type="radio" ng-model="gas.periode" value="12uur"/> 12 Uur
-			</label>
-			<label for="r5"><input id="r5" class="pr" type="radio" ng-model="gas.periode" value="dag"/> Dag </label>
-			<label for="r6"><input id="r6" class="pr" type="radio" ng-model="gas.periode" value="week"/> Week </label>
-			<label for="r7"><input id="r7" class="pr" type="radio" ng-model="gas.periode" value="maand"/> Maand </label>
-			<label for="r8"><input id="r8" class="pr" type="radio" ng-model="gas.periode" value="6maand"/> 6 Maanden
-			</label>
-			<label for="r9"><input id="r9" class="pr" type="radio" ng-model="gas.periode" value="jaar"/> Jaar </label>
-		</div>
-	</form>
 	<gas-barchart chart-data="gasStanden"></gas-barchart>
 	<div id="gasChart"></div>
 	<gas-meterstand chart-data="meterstanden"></gas-meterstand>
