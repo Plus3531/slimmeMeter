@@ -5,8 +5,13 @@
 			state.elektriciteit.tot = theDate;
 			getGrafiek(state.elektriciteit.periode, Math.round(state.elektriciteit.tot.getTime() / 1000));
 		};
-		$scope.periodChanged = function() {
-			state.elektriciteit.periode = $scope.elektriciteit.periode;
+		//$scope.periodChanged = function() {
+		//	state.elektriciteit.periode = $scope.elektriciteit.periode;
+		//	getGrafiek(state.elektriciteit.periode, Math.round(state.elektriciteit.tot.getTime() / 1000));
+		//};
+
+		$scope.thePeriodChanged = function(periode) {
+			state.elektriciteit.periode = periode;
 			getGrafiek(state.elektriciteit.periode, Math.round(state.elektriciteit.tot.getTime() / 1000));
 		};
 		getGrafiek(state.elektriciteit.periode, Math.round(state.elektriciteit.tot.getTime() / 1000));

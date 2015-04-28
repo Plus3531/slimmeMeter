@@ -1,12 +1,6 @@
 ﻿<div>
 	<pj-date-picker date-changed="theDateChanged(theDate)" datum="elektriciteit.tot"></pj-date-picker>
-
-		<span ng-repeat="n in [{name:'Uur', v:'uur'},{name:'3 Uur', v:'3uur'},{name:'6 Uur', v:'6uur'}
-	,{name:'12 Uur', v:'12uur'},{name:'Dag', v:'dag'},{name:'Week', v:'week'},{name:'Maand', v:'maand'}
-	,{name:'6 Maanden', v:'6maand'},{name:'Jaar', v:'jaar'}] track by $index">
-		<label for="r_{{$index}}"><input id="r_{{$index}}" class="pr" type="radio" ng-change="periodChanged()" ng-model="elektriciteit.periode" value="{{n.v}}"/> {{n.name}} </label>
-	</span>
-
+	<pj-period-picker period-changed="thePeriodChanged(periode)" periode="elekticiteit.periode"></pj-period-picker>
 	<electriciteit-chart chart-data="data2"></electriciteit-chart>
 	<div id="electriciteitChart"></div>
 </div>
