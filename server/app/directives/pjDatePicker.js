@@ -41,10 +41,10 @@ angular.module('kaifa').directive('pjDatePicker', function () {
 			scope.uur = scope.datum.getHours();
 		},
 		template:
-		'<div>'+
-		'	<span>jaar</span><select ng-model="jaar" ng-change="updateDate()" ng-options="jaar as jaar for jaar in jaren"><option>--</option></select>'+
-		'	<span>maand</span><select ng-model="maand" ng-change="updateDate()" ng-options="maand as maand.name for maand in maanden"><option>--</option></select>'+
-		'	<span>dag</span><select ng-model="dag" ng-change="updateDate()" ng-options="dag as dag for dag in dagen"><option>--</option></select>' +
+		'<div class="datePicker">'+
+		'	<span>datum</span><select ng-model="dag" ng-change="updateDate()" ng-options="dag as dag for dag in dagen"><option>--</option></select>' +
+		'	<select ng-model="maand" ng-change="updateDate()" ng-options="maand as maand.name for maand in maanden"><option>--</option></select>'+
+		'	<select ng-model="jaar" ng-change="updateDate()" ng-options="jaar as jaar for jaar in jaren"><option>--</option></select>'+
 		'	<span>uur</span><select ng-model="uur" ng-change="updateDate()" ng-options="uur as uur for uur in uren"><option>--</option></select>'+
 		'</div>'
 	};

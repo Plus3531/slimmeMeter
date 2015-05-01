@@ -32,28 +32,29 @@
 	<!-- endbuild -->
 	<title>Slimme Meter</title>
 	<style>
-		.SelectedEnergy {
-			margin-left: 5em;
-			font-weight: bold;
-			font-size: larger;
-			color: green;
+		body {
+			font-family:sans-serif;
 		}
-
+		a {
+			text-decoration: none;
+			font-size: large;
+		}
 		#period {
 			display: inline-block;
-			/*float: right;
-			height: 100px;*/
 		}
 
-		.pr {
-			/*  display: inline-block;
-		   vertical-align: top;
-			float: left;*/
+		.datePicker {
+			margin-top: .6em;
 		}
-
-		.chart-container, .chart {
-			/*width:400px;
-			height:250px;*/
+		.activeLink {
+			font-weight: bold;
+			color: #00008B;
+		}
+		.center {
+			margin-left: 30%;
+			margin-right: auto;
+padding:1em;
+			background-color: #b0e0e6;
 		}
 	</style>
 	<base href="/">
@@ -61,9 +62,9 @@
 
 <body ng-app="kaifa">
 	<div ng-controller="MainCtrl as main">
-		<a href="Elektra">Elektriciteit</a> |
-		<a href="Gass">Gas</a>
-		<span class="SelectedEnergy">{{main.$location.path()}}</span>
+		<span class="center"><a ng-class="{activeLink:elektriciteitIsActive()}" href="Elektra">Elektriciteit</a> |
+		<a ng-class="{activeLink:gasIsActive()}" href="Gasverbruik">Gas</a></span>
+		<!--<span class="SelectedEnergy">{{main.$location.path()}}</span>-->
 		<div ng-view></div>
 	</div>
 </body>

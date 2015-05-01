@@ -4,7 +4,7 @@
 			templateUrl: 'elektriciteit.html',
 			controller: 'ElektriciteitCtrl',
 			controllerAs: 'elektra'
-		}).when('/Gass', {
+		}).when('/Gasverbruik', {
 			templateUrl: 'gas.html',
 			controller: 'GasCtrl'
 		});
@@ -15,4 +15,10 @@
 		this.$route = $route;
 		this.$location = $location;
 		this.$routeParams = $routeParams;
+		$scope.gasIsActive = function() {
+			return $location.path().indexOf('Gas') > -1;
+		}
+		$scope.elektriciteitIsActive = function() {
+			return $location.path().indexOf('Elek') > -1;
+		}
 	}]);
