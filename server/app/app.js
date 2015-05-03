@@ -7,6 +7,9 @@
 		}).when('/Gasverbruik', {
 			templateUrl: 'gas.html',
 			controller: 'GasCtrl'
+		}).when('/Standen', {
+			templateUrl: 'stand.html',
+			controller: 'StandCtrl'
 		});
 		$locationProvider.html5Mode(true);
 	}])

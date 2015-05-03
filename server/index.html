@@ -23,9 +23,11 @@
 	<script src="app/directives/gasBarchart.js"></script>
 	<script src="app/directives/electriciteitChart.js"></script>
 	<script src="app/directives/gasMeterstand.js"></script>
+	<script src="app/directives/standChart.js"></script>
 	<script src="app/services.js"></script>
 	<script src="app/elektriciteitController.js"></script>
 	<script src="app/gasController.js"></script>
+	<script src="app/standController.js"></script>
 	<script src="app/directives/pjDatePicker.js"></script>
 	<script src="app/directives/pjPeriodPicker.js"></script>
 
@@ -42,7 +44,15 @@
 		#period {
 			display: inline-block;
 		}
-
+		.info {
+			font-size: smaller;
+			background-color: #ccffcc;
+			width:300px;
+			padding: 2px;
+		}
+		.floatRight {
+			float:right;
+		}
 		.datePicker {
 			margin-top: .6em;
 		}
@@ -62,8 +72,11 @@ padding:1em;
 
 <body ng-app="kaifa">
 	<div ng-controller="MainCtrl as main">
-		<span class="center"><a ng-class="{activeLink:elektriciteitIsActive()}" href="Elektra">Elektriciteit</a> |
-		<a ng-class="{activeLink:gasIsActive()}" href="Gasverbruik">Gas</a></span>
+		<span class="center">
+			<a ng-class="{activeLink:elektriciteitIsActive()}" href="Elektra">Elektriciteit</a> |
+			<a ng-class="{activeLink:gasIsActive()}" href="Gasverbruik">Gas</a>
+			<a ng-class="{activeLink:gasIsActive()}" href="Standen">Standen</a>
+		</span>
 		<!--<span class="SelectedEnergy">{{main.$location.path()}}</span>-->
 		<div ng-view></div>
 	</div>

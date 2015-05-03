@@ -20,13 +20,15 @@
 		return dag + '-' + maand + '-' + jaar;
 	};
 }).factory('state', function () {
-	var state = {
+	return {
 		gas: {
 			tot: new Date(), periode: 'dag'
 		},
 		elektriciteit: {
 			periode: 'dag', tot: new Date()
+		},
+		stand: {
+			tot: new Date()
 		}
 	};
-	return state;
 });

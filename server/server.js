@@ -26,6 +26,19 @@ app.use(express.static('.'));
 //	});
 //});
 
+app.get('/stand', function(req, res) {
+	if (!req.query.tot || req.query.tot === 0) {
+		req.query.tot = new Date().getTime() / 1000;
+	}
+	var sql = getStanden(req.query.tot - 31536000, req.query.tot);
+	var result = [];
+	db.each(sql, function(err, row) {
+		result.push({ "dag": row.dag, "asd": row.asd, "asp": row.asp, "tsd": row.tsd, "tsp": row.tsp, "gas": row.gas});
+	}, function() {
+		res.send(result);
+	});
+});
+
 app.get('/elektriciteit', function (req, res) {
 	if (!req.query.periode || req.query.periode === 0) {
 		res.status(404).send('Not found');
@@ -252,4 +265,9 @@ function getGasPerDag(van, tot) {
 }
 function getGasMeterstand(van, tot) {
 	return "SELECT tijdstip, meterstand, verbruik FROM vwgasverbruik where tijdstip <= " + tot + " and tijdstip >= " + van;
+}
+function getStanden(van, tot) {
+	return "select ((standen.datetime / 86400) * 86400) dag, " +
+		"max(asd181) asd,  max(asp182) asp , max(tsd281) tsd, max(tsp282) tsp,  gas " +
+		"from standen where standen.datetime <= " + tot + " and standen.datetime >= " + van + " group by dag";
 }
