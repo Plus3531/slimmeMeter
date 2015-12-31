@@ -1,4 +1,4 @@
-
+//commentaar
 var getSerialData = function() {
 	try {
 		var fs = require("fs");
