@@ -1,10 +1,11 @@
+/// <reference path="typings/node/node.d.ts"/>
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var port = process.env.port || 3001;
 var app = express();
 
-var fs = require("fs");
+//var fs = require("fs");
 var file = "../data/Kaifa.db";
 //var file = "c:/Users/paulusj/Documents/kaifa/data/Kaifa.db";
 var sqlite3 = require("sqlite3");
@@ -24,6 +25,12 @@ app.use(express.static('.'));
 //	}, function() {
 //		res.send(rowss);
 //	});
+//});
+
+//url rewrite
+//app.use(function(req, res, next) {
+// req.url = req.url.replace('/stand', '/elektriciteit');
+//  next();
 //});
 
 app.get('/stand', function(req, res) {

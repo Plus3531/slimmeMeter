@@ -6,7 +6,7 @@ angular.module('kaifa').directive('standChart', function () {
 			data: '=chartData'
 		},
 		template: '<form class="info">'+
-		'<label  for="datum">datum </label><label class="floatRight" id="datum">{{datumA}}</label>'+
+		'<label for="datum">datum </label><label class="floatRight" id="datum">{{datumA}}</label>'+
 		'<br/><br/>'+
 		'<label for="gas">gasmeterstand </label><label class="floatRight" id="gas">{{gas}}</label>'+
 		'<br/>'+

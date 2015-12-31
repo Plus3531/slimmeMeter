@@ -18,6 +18,12 @@
 		this.$route = $route;
 		this.$location = $location;
 		this.$routeParams = $routeParams;
+		$scope.getActiveIndex = function() {
+			if ($location.path().indexOf('Gas') > -1) return 1;
+			if ($location.path().indexOf('Elek') > -1) return 0;
+			if ($location.path().indexOf('Stand') > -1) return 2;
+			return -1;
+		}
 		$scope.gasIsActive = function() {
 			return $location.path().indexOf('Gas') > -1;
 		}

@@ -47,7 +47,7 @@
 		.info {
 			font-size: smaller;
 			background-color: #ccffcc;
-			width:300px;
+			width:250px;
 			padding: 2px;
 		}
 		.floatRight {
@@ -73,9 +73,9 @@ padding:1em;
 <body ng-app="kaifa">
 	<div ng-controller="MainCtrl as main">
 		<span class="center">
-			<a ng-class="{activeLink:elektriciteitIsActive()}" href="Elektra">Elektriciteit</a> |
-			<a ng-class="{activeLink:gasIsActive()}" href="Gasverbruik">Gas</a>
-			<a ng-class="{activeLink:gasIsActive()}" href="Standen">Standen</a>
+			<a ng-class="{activeLink:getActiveIndex() == 0}" href="Elektra">Elektriciteit</a> |
+			<a ng-class="{activeLink:getActiveIndex() == 1}" href="Gasverbruik">Gas</a> |
+			<a ng-class="{activeLink:getActiveIndex() == 2}" href="Standen">Standen</a>
 		</span>
 		<!--<span class="SelectedEnergy">{{main.$location.path()}}</span>-->
 		<div ng-view></div>
